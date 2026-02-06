@@ -84,6 +84,10 @@ public:
                                 std::function<void(std::string)> setter,
                                 const std::string& module_id);
     
+    void remove_config(const std::string& name, const std::string& module_id);
+
+    std::optional<std::string> properties(const std::string& key) const;
+    
     const std::map<std::string, std::shared_ptr<Module>>& get_modules() const { return modules_; }
     const std::vector<ToolEntry>& get_tools() const { return tools_; }
     const std::vector<ConfigEntry>& get_configs() const { return configs_; }
@@ -96,6 +100,8 @@ private:
     
     bool check_duplicate_registrations(const Module* module) const;
     bool verify_module_signature(const std::string& path) const;
+    
+    std::string generate_config_key(const std::string& module_id, const std::string& config_name) const;
     
     LwClient* client_ = nullptr;
     std::map<std::string, std::shared_ptr<Module>> modules_;
